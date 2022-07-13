@@ -21,7 +21,8 @@ AKI_assessment_OVERCOME_07_22 <- read_excel(
         )
 names(AKI_assessment_OVERCOME_07_22)[1]<-"Sample ID" #uniformity in patient identification across the 2 df. 
 dfAKI<- AKI_assessment_OVERCOME_07_22[!is.na(
-        AKI_assessment_OVERCOME_07_22$`AKI Y/N`),] #omit all values within Y/N that are NA. Without !, then this 
+        AKI_assessment_OVERCOME_07_22$`AKI Y/N`),] #omit all values within Y/N that are NA. Without !, then this filters ONLY NA values
+
 
 #merge both df's into 1 based on sample ID 
 df<-merge(dfPK,dfAKI,by='Sample ID')
@@ -35,5 +36,3 @@ df<-df %>%
         rename(ColBConc = 'ColB Conc. (mcg.mL)')
 #renamed columns bc ggplot won't read in symbols 
 
-ggplot(data=df,aes(x=Time,y=ColAConc,color=factor(AKI)))+
-        geom_point() 
