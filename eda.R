@@ -1,4 +1,4 @@
-#Preliminary data subsetting to remove the data where Time is x OR y... fucking morons 
+#Preliminary data subsetting to remove the data where Time is x OR y... 
 prelimdf<-df
 prelimdf<-prelimdf %>% 
         filter(!str_detect(prelimdf$Time,'OR')) #deletes string, 'OR' within the column, 'Time.' 
@@ -8,10 +8,10 @@ prelimdf$Time<-as.numeric(prelimdf$Time)
 colBdf<-prelimdf %>% 
         mutate(ColBConc=replace(ColBConc,ColBConc==0,NA))
 
-#####ColAConc x Time#####
+#####ColAConc x Time##### 5.20 x 4.46 
 ggplot(data=prelimdf,aes(x=Time,y=ColAConc,color=factor(AKI)))+
         geom_point()+
-        geom_smooth(method="lm")+
+        geom_smooth(method="loess")+
         scale_y_continuous(breaks=c(0,1,3,5,7,9),limits=c(0,10))+
         scale_x_continuous(breaks=c(0,1,3,5,6),limits=c(0,8))+
         ggtitle("[ColA] over Time for ICU Patients with and without AKI")+
@@ -24,8 +24,8 @@ ggplot(data=prelimdf,aes(x=Time,y=ColAConc,color=factor(AKI)))+
 ggplot(data=colBdf,aes(x=Time,y=ColBConc,color=factor(AKI)))+
         geom_point()+
         geom_smooth(method="loess")+
-        scale_y_continuous(breaks=c(0,1,3,5),limits=c(0,5))+
-        scale_x_continuous(breaks=c(0,1,3,5,6,7,9,10),limits=c(0,10))+
+        scale_y_continuous(breaks=c(0,1,3,5,7,9),limits=c(0,10))+
+        scale_x_continuous(breaks=c(0,1,3,5,6,7,9,10),limits=c(0,8))+
         ggtitle("[ColB] over Time for ICU Patients with and without AKI")+
         labs(color="AKI Incidence")+
         xlab("Time since last dose (hours)")+
@@ -35,7 +35,7 @@ ggplot(data=colBdf,aes(x=Time,y=ColBConc,color=factor(AKI)))+
 #####ColA/IS x Time#####
 ggplot(data=prelimdf,aes(x=Time,y=as.numeric(prelimdf$`ColA/IS`),color=factor(AKI)))+
         geom_point()+
-        geom_smooth(method="lm")+
+        geom_smooth(method="loess")+
         scale_y_continuous(breaks=c(0,1,3,5),limits=c(0,3))+
         scale_x_continuous(breaks=c(0,1,3,5,6,7,9,10),limits=c(0,10))+
         ggtitle("ColA/IS over Time for ICU Patients with and without AKI")+
@@ -47,9 +47,9 @@ ggplot(data=prelimdf,aes(x=Time,y=as.numeric(prelimdf$`ColA/IS`),color=factor(AK
 #####ColA/B x Time#####
 ggplot(data=prelimdf,aes(x=Time,y=as.numeric(prelimdf$`ColA/ColB`),color=factor(AKI)))+
         geom_point()+
-        geom_smooth(method="lm")+
+        geom_smooth(method="loess")+
         scale_y_continuous(breaks=c(0,1,3,5,6),limits=c(0,6))+
-        scale_x_continuous(breaks=c(0,1,3,5,6,7,9,10),limits=c(0,10))+
+        scale_x_continuous(breaks=c(0,1,3,4,5,6,7,9,10),limits=c(0,10))+
         ggtitle("ColA/B over Time for ICU Patients with and without AKI")+
         labs(color="AKI Incidence")+
         xlab("Time since last dose (hours)")+
@@ -59,7 +59,13 @@ ggplot(data=prelimdf,aes(x=Time,y=as.numeric(prelimdf$`ColA/ColB`),color=factor(
 #####IS Area x Time#####
 ggplot(data=prelimdf,aes(x=Time,y=as.numeric(prelimdf$`IS Area`),color=factor(AKI)))+
         geom_point()+
-        geom_smooth(method="lm")
+        geom_smooth(method="loess")+
+        labs(color="AKI Incidence")+
+        xlab("Time since last dose (hours)")+
+        ylab("IS Area (units)")+
+        scale_x_continuous(breaks=c(0,1,3,5,6),limits=c(0,10))+
+        scale_y_continuous()+
+        theme_bw()
 
 ggplot(data=prelimdf,aes(x=Time,y=ColBConc,color=factor(`Stage (worst)`)))+
         geom_point()+

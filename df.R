@@ -5,7 +5,7 @@ library(readxl)
 #Import PK dataset 
 Copy_of_Colistin_PK_Data_Updated_7_6_22 <- read_excel(
         "~/Library/Mobile Documents/com~apple~CloudDocs/UNC PKPD/colistin/data/Copy of Colistin_PK_Data_Updated_7.6.22.xlsx", 
-                                                      +     sheet = "Sheet1", skip = 2
+                                                      sheet = "Sheet1", skip = 2
         )
 dfPK<-Copy_of_Colistin_PK_Data_Updated_7_6_22[!is.na(
         Copy_of_Colistin_PK_Data_Updated_7_6_22$`ColA Area`),] #removed all data with NA values for ColA Area 
