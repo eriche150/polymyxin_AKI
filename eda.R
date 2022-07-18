@@ -6,7 +6,8 @@ prelimdf<-prelimdf %>%
         filter(!str_detect(prelimdf$Time,'0R'))
 prelimdf$Time<-as.numeric(prelimdf$Time)
 colBdf<-prelimdf %>% 
-        mutate(ColBConc=replace(ColBConc,ColBConc==0,NA))
+        mutate(ColBConc=replace(ColBConc,ColBConc==0,NA)) #Values of 0 for ColB Conc when recorded as NA for ColA Conc
+#This replaces values of 0 with NA 
 
 #####ColAConc x Time##### 5.20 x 4.46 
 ggplot(data=prelimdf,aes(x=Time,y=ColAConc,color=factor(AKI)))+
@@ -65,14 +66,20 @@ ggplot(data=prelimdf,aes(x=Time,y=as.numeric(prelimdf$`IS Area`),color=factor(AK
         ylab("IS Area (units)")+
         scale_x_continuous(breaks=c(0,1,3,5,6),limits=c(0,10))+
         scale_y_continuous()+
+        ggtitle("IS Area over Time for ICU Patients with and without AKI")+
         theme_bw()
-
+#####
 ggplot(data=prelimdf,aes(x=Time,y=ColBConc,color=factor(`Stage (worst)`)))+
         geom_point()+
         scale_y_continuous(breaks=c(0,1,3,5),limits=c(0,10))+
         scale_x_continuous(breaks=c(0,1,3,5,6),limits=c(0,10))+
         theme_bw()
 
+#####Baseline CrCL versus AKI and non-AKI 
+ggplot(data=prelimdf, aes(x=prelimdf$AKI,y=prelimdf$`Baseline Clcr`))+
+        geom_boxplot()+
+        
+        theme_bw()
 
 #####
 #Look at trends between two groups: + AKI and - AKI 
@@ -87,10 +94,11 @@ subgroupdf<-prelimdf[!is.na(prelimdf$`Day AKI`),]
 subgroupdf$dDate<-ifelse(subgroupdf$'Day AKI'<= 6, 'A','B') #create new column to separate pt who experienced Day AKI 
 
 #####plot Day AKI on x-axis versus ColA,B, and everything else mentioned, maybe peak Scr as well? 
+#Peak Scr
 ggplot(data=subgroupdf,
        aes(x=dDate,y=as.numeric(subgroupdf$`Peak Cr`)))+
         geom_boxplot()+
-        xlab("Date of AKI")+
+        xlab("Time to reach AKI")+
         ylab("Peak Scr levels during admission (mg/dL)")+
         ggtitle("Peak Scr and Date of AKI")+
         scale_x_discrete(labels=c("AKI achieved < 6 days","AKI achieved >= 6 days"))+
