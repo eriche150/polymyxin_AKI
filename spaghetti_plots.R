@@ -58,9 +58,9 @@ prelimdf<-prelimdf %>%
 prelimdf$Time<-as.numeric(prelimdf$Time)
 
 #ColAxSampleID
-p<-ggplot(data=prelimdf,aes(x=Time,y=ColAConc,color=factor(prelimdf$'Sample ID')))+
+p<-ggplot(data=prelimdf,aes(x=Time,y=ColAConc,color=factor(prelimdf$'Sample ID')))+ #adding color in original ggplot call will plot a line specific to each sample ID 
         geom_point()+
-        geom_line()+
+        geom_line()+#line specific to each sample ID will be created
         scale_y_continuous(breaks=c(0,1,3,5,7,9),limits=c(0,10))+
         scale_x_continuous(breaks=c(0,1,3,5,6),limits=c(0,8))+
         ggtitle("[ColA] over Time for ICU Patients")+
@@ -68,6 +68,17 @@ p<-ggplot(data=prelimdf,aes(x=Time,y=ColAConc,color=factor(prelimdf$'Sample ID')
         ylab("ColA Concentration (units)")+
         theme_bw()
 p+theme(legend.position="none") #removes the legend after the lines are colored after each sample ID 
+
+
+ggplot(data=prelimdf, aes(
+        x=Time, y=ColAConc
+))+
+        geom_point(aes(color=factor('Sample ID')))+
+        geom_line()+
+        scale_y_continuous(breaks=c(0,1,3,5,7,9),limits=c(0,10))
+
+
+
 
 #ColBxSampleID
 L<-ggplot(data=prelimdf,aes(x=Time,y=ColBConc,color=factor(prelimdf$'Sample ID')))+
@@ -81,3 +92,6 @@ L<-ggplot(data=prelimdf,aes(x=Time,y=ColBConc,color=factor(prelimdf$'Sample ID')
         theme_bw()
 L+theme(legend.position="none")
 #ISxSampleID
+
+
+
