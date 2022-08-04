@@ -27,7 +27,7 @@ dfAKI<- AKI_assessment_OVERCOME_07_22[!is.na(
 #merge both df's into 1 based on sample ID 
 df<-merge(dfPK,dfAKI,by='Sample ID')
 
-#Graph [ColA] over TIME and have 1 color be patients who experienced AKI, and another color for those who were fine 
+#rename column headers bc ggplot won't read in symbols 
 names(df)
 df<-df %>% 
         rename(ColAConc = 'ColA Conc. (mcg/mL)') %>% 

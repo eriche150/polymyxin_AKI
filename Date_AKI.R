@@ -1,4 +1,4 @@
-#Look at trends inside AKI group, and separate between 'Time to reach AKI'
+=#Look at trends inside AKI group, and separate between 'Time to reach AKI'
 #Import Renal Function Dataset 
 AKI_assessment_OVERCOME_07_22 <- read_excel(
         "~/Library/Mobile Documents/com~apple~CloudDocs/UNC PKPD/colistin/data/AKI assessment OVERCOME 07 22.xlsx"
